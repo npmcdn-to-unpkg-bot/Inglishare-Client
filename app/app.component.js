@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var login_component_1 = require('./login/login.component');
 var register_component_1 = require('./register/register.component');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Englishare Website';
@@ -18,9 +19,16 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n\t\t<h1>{{title}}</h1>\n\t\t<is-register></is-register>\n\t\t<is-login></is-login>\n\t",
-            directives: [login_component_1.LoginComponent, register_component_1.RegisterComponent]
-        }), 
+            template: "\n\t\t<h1>{{title}}</h1>\n\t<nav>\n      <a [routerLink]=\"['Login']\">Login</a>\n\t   <a [routerLink]=\"['Register']\">Register</a>\n    </nav>\n    <router-outlet></router-outlet>\n\t",
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
+            providers: [
+                router_deprecated_1.ROUTER_PROVIDERS
+            ]
+        }),
+        router_deprecated_1.RouteConfig([
+            { path: '/login', name: 'Login', component: login_component_1.LoginComponent },
+            { path: '/register', name: 'Register', component: register_component_1.RegisterComponent }
+        ]), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
     return AppComponent;
