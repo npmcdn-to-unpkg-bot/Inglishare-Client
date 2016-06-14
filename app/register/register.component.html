@@ -1,0 +1,52 @@
+<form class="form"   (ngSubmit)="onSubmit()" novalidate [ngFormModel]="registerForm">
+	
+    <div class="form-group" [ngClass]="{ 'has-error' : !firstName.valid && submitAttempt }">
+      <label class="control-label" for="firstName">First Name</label>
+      <em *ngIf="firstName.hasError('required') && submitAttempt">Required</em> 
+      <input type="text" class="form-control" placeholder="First Name" ngControl="firstName">
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error' : !lastName.valid && submitAttempt }">
+      <label class="control-label" for="lastName">Last Name</label>
+      <em *ngIf="lastName.hasError('required') && submitAttempt">Required</em> 
+      <input type="text" class="form-control" placeholder="Last Name" ngControl="lastName">
+    </div>
+
+
+    <div class="form-group" [ngClass]="{ 'has-error' : !email.valid && submitAttempt }">
+      <label class="control-label" for="email">Email</label>
+      <em *ngIf="email.hasError('pattern') && submitAttempt">Email invalid</em>
+      <em *ngIf="email.hasError('required') && submitAttempt">Required</em> 
+      <input type="text" class="form-control" placeholder="Email" ngControl="email">
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error' : !password.valid && submitAttempt }">
+      <label class="control-label" for="password">Password</label>
+      <em *ngIf="password.hasError('required') && submitAttempt">Required</em>
+      <em *ngIf="password.hasError('minlength') && submitAttempt">Must be at least 6 characters</em>
+      <input type="password" class="form-control" placeholder="Password" ngControl="password">
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error' : !confirmPassword.valid && submitAttempt }">
+      <label class="control-label" for="confirmPassword">Confirm Password</label>
+      <em *ngIf="registerForm.hasError('mismatchedPasswords') && submitAttempt">Confirm Password is not correct</em>
+      <input type="password" class="form-control" placeholder="Confirm Password" ngControl="confirmPassword">
+    </div>
+  
+    <div class="form-group">
+      <label class="inline">Gender</label>
+      <label class="radio-inline">
+        <input type="radio" [ngModel]="{checked: gender == 'male'}" (change)="gender=$event.target.value"  name="sex" value="male">Male
+      </label>
+      <label class="radio-inline">
+        <input type="radio" [ngModel]="{checked: gender == 'female'}" (change)="gender=$event.target.value" name="sex" value="female" >Female
+      </label>
+    </div>
+  
+  
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+
+</form>
+
