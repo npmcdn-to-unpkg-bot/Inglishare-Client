@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require("@angular/common");
+var UsersApi_1 = require('../api-client/api/UsersApi');
 var RegisterComponent = (function () {
-    function RegisterComponent(fb) {
+    function RegisterComponent(fb, users) {
         this.fb = fb;
+        this.users = users;
         this.submitAttempt = false;
         this.email = new common_1.Control('', common_1.Validators.compose([common_1.Validators.required, common_1.Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]));
         this.firstName = new common_1.Control('', common_1.Validators.compose([common_1.Validators.required]));
@@ -39,18 +41,32 @@ var RegisterComponent = (function () {
         };
     };
     RegisterComponent.prototype.onSubmit = function () {
+        var _this = this;
         this.registerForm.value.gender = this.gender;
-        console.log(this.registerForm.value);
         this.submitAttempt = true;
+        debugger;
+        if (this.registerForm.valid) {
+            var data = this.registerForm.value;
+            data.userType = 'normal';
+            this.users.registerUser(data).subscribe(function (res) {
+                _this.registerSuccess(res);
+                console.log(res);
+            }, function (res) {
+                alert(JSON.stringify(res));
+            });
+        }
+    };
+    RegisterComponent.prototype.registerSuccess = function (res) {
     };
     RegisterComponent = __decorate([
         core_1.Component({
             selector: 'is-register',
             styleUrls: [],
             templateUrl: 'app/register/register.component.html',
-            directives: [common_1.FORM_DIRECTIVES]
+            directives: [common_1.FORM_DIRECTIVES],
+            providers: [UsersApi_1.UsersApi]
         }), 
-        __metadata('design:paramtypes', [common_1.FormBuilder])
+        __metadata('design:paramtypes', [common_1.FormBuilder, UsersApi_1.UsersApi])
     ], RegisterComponent);
     return RegisterComponent;
 }());
